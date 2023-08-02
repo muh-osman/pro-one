@@ -1,12 +1,11 @@
 // React & React Router
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // Sass
-import "./LogIn.scss";
+import css from "./LogIn.module.scss";
 // Axios
 import axios from "axios";
 // useContext
-import { useContext } from "react";
 import { LocalStorageContext } from "../../Context/LocalStorageProvider";
 
 export default function LogIn() {
@@ -57,7 +56,7 @@ export default function LogIn() {
         <button type="submit">Login</button>
       </form>
       <p>Or</p>
-      <Link className="signup-btn" to="/signup">
+      <Link className={css.signup_btn} to="/signup">
         SignUp
       </Link>
     </>

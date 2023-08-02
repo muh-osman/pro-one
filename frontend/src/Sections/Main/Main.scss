@@ -1,6 +1,7 @@
 @use "../../sass" as *;
 
 .main {
+  padding-top: 70px;
   background-color: $secondary-clr;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 70px);
 }

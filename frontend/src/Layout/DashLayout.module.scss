@@ -1,0 +1,32 @@
+.dashboard_box {
+  display: flex;
+  padding-top: 70px;
+
+  & .aside {
+    position: fixed;
+    left: 0;
+    top: 70px;
+    min-width: 200px;
+    height: calc(100vh - 70px);
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    & a {
+      display: inline-block;
+      width: 100%;
+      padding: 16px;
+      color: red;
+
+      &:hover {
+        background-color: gainsboro;
+      }
+    }
+  }
+}
+
+body {
+  height: 5000px;
+}
