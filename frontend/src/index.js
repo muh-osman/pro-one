@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import LocalStorageProvider from "./Context/LocalStorageProvider";
+import AuthProvider from "./Auth/AuthContext";
 import reportWebVitals from "./reportWebVitals";
 // Sass file
 import "./sass/normalize.scss";
@@ -9,9 +9,9 @@ import "./sass/normalize.scss";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <LocalStorageProvider>
+    <AuthProvider>
       <App />
-    </LocalStorageProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 

@@ -1,13 +1,12 @@
 // React & React Router
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 // Axios
 import axios from "axios";
 // Sass
 import "./SignUp.scss";
 // useContext
-import { useContext } from "react";
-import { LocalStorageContext } from "../../Context/LocalStorageProvider";
+import { authContext } from "../../Auth/AuthContext";
 
 
 export default function SignUp() {
@@ -16,7 +15,7 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
-  const { emailExist, setEmailExist } = useContext(LocalStorageContext);
+  const { auth, setAuth } = useContext(authContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -29,16 +28,18 @@ export default function SignUp() {
         password_confirmation: "123456789",
       })
       .then((res) => {
-        console.log(res);
-        localStorage.setItem("emailStorage", email);
-        setEmailExist((prev) => ({ ...prev, boolean: true }));
+        const token = res.data.data.token
+        const userDetails = res.data.data.user
         navigate("/");
-      })
+        
+        setAuth((prev) => ({ ...prev, token, userDetails}));
 
+      })
       .catch((err) => {
         console.log(err.response.data.message);
       });
   };
+
 
   return (
     <>

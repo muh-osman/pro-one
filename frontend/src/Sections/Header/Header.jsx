@@ -4,23 +4,23 @@ import { useContext, useLayoutEffect } from "react";
 // Sass
 import "./Header.scss";
 // Me
-import { LocalStorageContext } from "../../Context/LocalStorageProvider";
+import { authContext } from "../../Auth/AuthContext";
 
 export default function Header() {
-  const { emailExist, setEmailExist } = useContext(LocalStorageContext);
+  const { auth, setAuth } = useContext(authContext);
 
   useLayoutEffect(() => {
     const email = localStorage.getItem("emailStorage");
 
     if (email) {
-      setEmailExist((prev) => ({ ...prev, boolean: true }));
+      setAuth((prev) => ({ ...prev, boolean: true }));
     }
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("emailStorage");
-    setEmailExist((prev) => ({ ...prev, boolean: false }));
-    window.location.reload();
+    setAuth((prev) => ({ ...prev, token: "", userDetails: {} }));
+    // window.location.reload();
+    console.log(auth)
   };
 
   return (
@@ -33,7 +33,7 @@ export default function Header() {
           <li>
             <Link to="dashboard">Dashboard</Link>
           </li>
-          {!emailExist.boolean ? (
+          {!auth.token ? (
             <li>
               <Link to="login">Login</Link>
             </li>

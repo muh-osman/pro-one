@@ -6,7 +6,7 @@ import css from "./LogIn.module.scss";
 // Axios
 import axios from "axios";
 // useContext
-import { LocalStorageContext } from "../../Context/LocalStorageProvider";
+import { authContext } from "../../Auth/AuthContext";
 
 export default function LogIn() {
   const [email, setEmail] = useState("mail99@mail.com");
@@ -14,7 +14,7 @@ export default function LogIn() {
 
   const navigate = useNavigate()
 
-  const { emailExist, setEmailExist } = useContext(LocalStorageContext);
+  const { auth, setAuth } = useContext(authContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -25,9 +25,10 @@ export default function LogIn() {
         password: password,
       })
       .then((res) => {
+        const token = res.data.data.token
+        const userDetails = res.data.data.user
         console.log(res);
-        localStorage.setItem("emailStorage", email);
-        setEmailExist((prev) => ({ ...prev, boolean: true }));
+        setAuth((prev) => ({ ...prev, token, userDetails}));
         navigate('/')
       })
       .catch((err) => {

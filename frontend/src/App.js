@@ -1,7 +1,7 @@
 //React router
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 // Pages & Components
-import { Layout, Home, About, LogIn, SignUp, Dashboard, Users, DashLayout } from "./_index";
+import { Layout, Home, About, LogIn, SignUp, Dashboard, Users, DashLayout, Edit, CreateUser, RouteProtector } from "./_index";
 
 
 
@@ -15,10 +15,14 @@ export default function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="about" element={<About />} />
 
-          <Route path="dashboard" element={<DashLayout />}>
-              <Route index  element={<Dashboard />} />
-              <Route path="users" element={<Users />} />
-          </Route>
+                <Route element={<RouteProtector />}>
+                    <Route path="dashboard" element={<DashLayout />}>
+                        <Route index element={<Dashboard />} />
+                        <Route path="users" element={<Users />} />
+                        <Route path="users/:id" element={<Edit />} />
+                        <Route path="user/create" element={<CreateUser />} />
+                    </Route>
+                </Route>
       </Route>
     )
   );
