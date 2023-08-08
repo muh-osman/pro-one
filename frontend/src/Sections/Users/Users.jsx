@@ -1,38 +1,48 @@
 // Reacr & React Router
-import { useEffect, useState } from "react";
-// Axios
-import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 // Sass
 import css from "./Users.module.scss";
 //  React Icons
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-
+// Me(Axios)
+import api from "../../api";
+// useContext
+import { authContext } from "../../Auth/AuthContext";
 
 
 
 export default function Users() {
+  const { auth, setAuth } = useContext(authContext)
+  const token = auth.token
   // Fetch data
   const [users, setUsers] = useState([]);
-  const apiUrl = "http://127.0.0.1:8000";
-  const fetchUsers = () => {
-    axios
-      .get(`${apiUrl}/api/user/show`)
-      .then(res => setUsers(res.data))
-      .catch(err => console.log(err));
-  };
+  async function fetchUsers() {
+    try {
+      const res = await api.get("/api/user/show",{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUsers(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // Edit Button
-  const editBtn = (id) => {};
-  
   // Delete Button
   const deleteBtn = async (id) => {
     try {
-      await axios.delete(`${apiUrl}/api/user/delete/${id}`);
+      await api.delete(`/api/user/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       fetchUsers();
     } catch (error) {
       console.error(error);
@@ -52,16 +62,16 @@ export default function Users() {
         </thead>
 
         <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
+          {users.map(({ id, name, email }) => (
+            <tr key={id}>
+              <td>{id}</td>
+              <td>{name}</td>
+              <td>{email}</td>
               <td>
-                <button onClick={() => editBtn(user.id)}>
+                <Link to={`${id}`}>
                   <AiFillEdit />
-                </button>
-                <button onClick={() => deleteBtn(user.id)}>
+                </Link>
+                <button onClick={() => deleteBtn(id)}>
                   <MdDelete />
                 </button>
               </td>
