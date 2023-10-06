@@ -11,9 +11,11 @@ export { default as LogIn } from "./Pages/LogIn/LogIn";
 export { default as SignUp } from "./Pages/SignUp/SignUp";
 export { default as Dashboard } from "./Pages/Dashboard/Dashboard";
 export { default as CreateUser } from "./Pages/CreateUser/CreateUser";
+export { default as Loading } from "./Pages/Loading/Loading";
 // Layout
 export { default as Layout } from "./Layout/Layout";
 export { default as DashLayout } from "./Layout/DashLayout.jsx";
-// 
+// Auth
 export { default as RouteProtector } from "./Auth/RouteProtector"
+export { default as PersistLogin } from "./Auth/PersistLogin"
 

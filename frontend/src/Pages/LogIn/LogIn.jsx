@@ -7,8 +7,13 @@ import css from "./LogIn.module.scss";
 import axios from "axios";
 // useContext
 import { authContext } from "../../Auth/AuthContext";
+// Universal Cookie
+import Cookies from "universal-cookie";
 
 export default function LogIn() {
+
+  const cookie = new Cookies()
+
   const [email, setEmail] = useState("mail99@mail.com");
   const [password, setPassword] = useState("123456789");
 
@@ -26,6 +31,7 @@ export default function LogIn() {
       })
       .then((res) => {
         const token = res.data.data.token
+        cookie.set("Bearer", token);
         const userDetails = res.data.data.user
         console.log(res);
         setAuth((prev) => ({ ...prev, token, userDetails}));

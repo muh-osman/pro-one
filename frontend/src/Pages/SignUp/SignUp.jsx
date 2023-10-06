@@ -7,9 +7,14 @@ import axios from "axios";
 import "./SignUp.scss";
 // useContext
 import { authContext } from "../../Auth/AuthContext";
+// Universal Cookie
+import Cookies from "universal-cookie";
 
 
 export default function SignUp() {
+
+  const cookie = new Cookies()
+
   const [email, setEmail] = useState("mail99@mail.com");
   const [password, setPassword] = useState("123456789");
 
@@ -29,6 +34,7 @@ export default function SignUp() {
       })
       .then((res) => {
         const token = res.data.data.token
+        cookie.set("Bearer", token);
         const userDetails = res.data.data.user
         navigate("/");
         
